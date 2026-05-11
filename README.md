@@ -1,30 +1,34 @@
-# course-cheatsheet-maker
+# course-cheatsheet-maker（中文版）
 
-[中文](#中文) | [English](#english)
+`course-cheatsheet-maker` 是一个可安装的 Codex 风格 skill，用于把课程资料转换成紧凑的 A4 横向 cheatsheet。
 
----
+它可以帮助 coding agent：
 
-## 中文
+- 从 PDF、PPTX、DOCX、TXT 和 Markdown 课程文件中提取文本；
+- 区分知识类资料和题目类资料；
+- 构建可追踪的候选知识单元；
+- 根据课程强调内容和考核证据对主题重要性进行排序；
+- 在渲染前创建可检查的工作文件；
+- 渲染可打印的三栏和四栏 HTML cheatsheet。
 
-`course-cheatsheet-maker` 是一个可安装的 Codex 风格 skill，用于根据课程材料生成紧凑的 A4 横版课程 cheatsheet。
+HTML/CSS 是排版的权威来源。PDF 导出是可选的，通常通过浏览器打印对话框完成。
 
-它可以帮助 Agent：
+## 这个仓库包含什么
 
-- 从 PDF、PPTX、DOCX、TXT、Markdown 等课程材料中提取文本；
-- 构建可追溯的候选知识单元；
-- 结合知识类材料和题目类材料推断 topic 重要性；
-- 生成可人工检查的中间分析产物；
-- 渲染 3 栏和 4 栏的可打印 HTML cheatsheet。
+这个 GitHub 仓库包含两部分：
 
-HTML/CSS 是最终版式的 source of truth。PDF 导出是可选步骤，应尽量保持 HTML 打印版式不变。
+1. 可复用的 runtime skill package 文件；以及
+2. 位于 `courses/COURSE_NAME/` 的课程 starter scaffold。
 
-> **重要说明：** 正确安装本 skill 时，应同时包含 `courses/COURSE_NAME/`。它是随仓库发布的空 starter scaffold，用来提供 `materials/knowledge/`、`materials/questions/`、`working/` 和 `outputs/` 这些目录。请只把它当作模板，不要把真实课程材料提交到公开仓库。
+包含这个 starter scaffold 是为了让第一次使用的用户可以直接看到所需课程文件夹结构，而不需要手动创建每一个文件夹。它不是真实课程，也不应该包含公开课程资料。
 
----
+`courses/COURSE_NAME/` 内隐藏的 `.gitkeep` 文件是允许存在的。它们只是为了让 Git 跟踪空的 starter scaffold 文件夹；它们不是真实课程资料，也不算生成输出。
 
-## 这个仓库是什么
+`README.md`、`QUICK_START.md` 和 `INSTALL.md` 等仓库文档只面向 GitHub 用户和安装者。它们属于这个仓库，但不属于安装后的 runtime skill folder。
 
-这个仓库既包含可安装的 skill 文件，也包含一个随 release 安装的空课程目录模板。
+## 仓库结构
+
+公开仓库可以包含文档和仓库元数据：
 
 ```text
 course-cheatsheet-maker/
@@ -40,47 +44,67 @@ course-cheatsheet-maker/
         questions/
       working/
       outputs/
-  INSTALL.md
-  QUICK_START.md
   README.md
+  QUICK_START.md
+  INSTALL.md
+  LICENSE
+  .gitignore
 ```
 
-其中：
+路径作用：
 
-| 路径 | 作用 |
+| 路径 | 用途 |
 |---|---|
-| `SKILL.md` | skill 的核心说明文件，Codex/Agent 会根据它执行工作流。 |
-| `scripts/` | 提取材料、构建候选单元、渲染 HTML、验证输出的辅助脚本。 |
-| `assets/` | 3 栏和 4 栏 HTML 模板。 |
-| `references/` | 重要性评分、内容压缩和版式规范。 |
-| `courses/COURSE_NAME/` | 空课程模板，用于让新用户知道课程材料应该怎么放。 |
+| `SKILL.md` | Codex 或其他 coding agent 使用的核心 skill 指令。 |
+| `requirements.txt` | 可选的 Python 文本提取依赖。 |
+| `scripts/` | 用于提取、候选单元构建、HTML 渲染、PDF 指引和验证的辅助脚本。 |
+| `assets/` | HTML 模板和渲染资源。 |
+| `references/` | skill 使用的评分规则和指导文档。 |
+| `courses/COURSE_NAME/` | 面向第一次使用者的空 starter scaffold。 |
+| `README.md`, `QUICK_START.md`, `INSTALL.md` | 仅为仓库文档。不要把这些复制到安装后的 runtime skill folder 中。 |
 
-`courses/COURSE_NAME/` 是模板，不是固定课程名。实际使用时，你可以把它复制或改名为真实课程名，例如 `COMP7503`、`MATH101` 或 `DATABASE`。
+## 安装后的 Skill 结构
 
----
+安装后，全局 skill 文件夹应该只包含 runtime package：
 
-## Skill 安装位置和课程材料位置
+```text
+~/.agents/skills/course-cheatsheet-maker/
+  SKILL.md
+  requirements.txt
+  scripts/
+  assets/
+  references/
+  courses/
+    COURSE_NAME/
+      materials/
+        knowledge/
+        questions/
+      working/
+      outputs/
+```
 
-请区分两个位置：
+安装后的 skill 文件夹不应该包含 `README.md`、`QUICK_START.md`、`INSTALL.md`、`LICENSE`、`.gitignore`、`.git/` 或 `__pycache__/` 等仅属于仓库的文件。
 
-1. **skill 安装位置**：放 `SKILL.md`、`scripts/`、`assets/` 等文件，也应包含空的 `courses/COURSE_NAME/` starter scaffold。
-2. **课程材料位置**：放你自己的 lecture notes、slides、quiz、past paper 等课程文件。
+## Skill 位置与课程项目位置
 
-Codex 风格的全局 skill 安装位置通常是：
+请把这两个位置分开：
+
+1. **全局 skill 安装文件夹**：包含可复用的 skill package 和空的 `courses/COURSE_NAME/` scaffold。
+2. **私人课程项目文件夹**：包含你的真实课堂笔记、课件、quiz、past paper、生成的 working 文件和生成的 outputs。
+
+典型的全局 skill 位置：
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
 ```
 
-Windows 上通常对应：
+在 Windows 上，这通常对应：
 
 ```text
 C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
 ```
 
-真实课程材料不要放进全局 skill 安装目录。推荐放在你自己的课程项目中，例如：
-
-全局 skill 安装中可以包含空的 `courses/COURSE_NAME` scaffold，但真实课程材料应保留在你的私有课程项目中。
+真实课程资料应该放在你自己的私人课程项目中，而不是全局 skill 安装目录里。一个私人课程项目可以长这样：
 
 ```text
 my-course-project/
@@ -93,37 +117,22 @@ my-course-project/
       outputs/
 ```
 
-如果你只是本地测试，也可以直接在本仓库中复制 `courses/COURSE_NAME/` 模板进行测试；但不要把真实课程材料提交到公开仓库。
-
----
+把已安装的 `courses/COURSE_NAME/` scaffold 当作模板使用。将它复制到你的私人课程项目中，并把副本重命名为你的真实课程名，例如 `COMP7503`、`MATH101` 或 `DATABASE`。
 
 ## 快速使用
 
-详细步骤请查看 [`QUICK_START.md`](QUICK_START.md)。最短流程如下：
+请查看 [QUICK_START.md](QUICK_START.md) 获取第一次运行指南。简短版本如下：
 
-1. 按照 [`INSTALL.md`](INSTALL.md) 安装并验证 skill。
-2. 复制课程模板：
-
-```bash
-mkdir -p courses
-cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
-```
-
-Windows PowerShell：
-
-```powershell
-New-Item -ItemType Directory -Force courses
-Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
-```
-
-3. 放入课程材料：
+1. 按照 [INSTALL.md](INSTALL.md) 安装 skill。
+2. 将 `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/` 复制到你自己的课程项目中，例如 `courses/COMP7503/`。
+3. 将资料放入：
 
 ```text
 courses/COMP7503/materials/knowledge/
 courses/COMP7503/materials/questions/
 ```
 
-4. 在课程项目根目录打开 Codex，并使用：
+4. 在你的课程项目根目录打开 Codex，并使用：
 
 ```text
 Use $course-cheatsheet-maker for COMP7503.
@@ -141,111 +150,80 @@ detail_mode = balanced
 Please run extraction, build candidate units, create all required working artifacts, generate cheatsheet_content.md, render both HTML outputs, and run validation.
 ```
 
-5. 查看输出：
+5. 查看生成的 HTML 文件：
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 courses/COMP7503/outputs/cheatsheet_4col.html
 ```
 
----
+## 课程资料应该放在哪里
 
-## 课程材料应该放在哪里
-
-知识类材料放入：
+把知识类资料放在：
 
 ```text
 courses/COURSE_NAME/materials/knowledge/
 ```
 
-适合放在 `knowledge/` 的材料包括：
+适合放入 `knowledge/` 的资料包括 lecture slides、lecture notes、handouts、textbook excerpts、tutorial explanations 和 review notes。
 
-```text
-lecture slides
-lecture notes
-course handouts
-textbook excerpts
-tutorial explanations
-review notes
-```
-
-题目类材料放入：
+把题目类或考核相关资料放在：
 
 ```text
 courses/COURSE_NAME/materials/questions/
 ```
 
-适合放在 `questions/` 的材料包括：
+适合放入 `questions/` 的资料包括 quizzes、assignments、tutorial questions、workshop questions、problem sets、sample exams、mock exams 和 past papers。
 
-```text
-quiz
-assignment
-tutorial questions
-workshop questions
-problem sets
-sample exams
-mock exams
-past papers
-```
+`knowledge/` 和 `questions/` 内部支持子文件夹。
 
-`knowledge/` 和 `questions/` 内部可以继续创建子文件夹。
+## 参数概览
 
----
-
-## 参数总览
-
-| 参数 | 可选值 | 推荐默认值 | 说明 |
+| 参数 | 取值 | 推荐默认值 | 含义 |
 |---|---|---|---|
-| `workflow_mode` | `safe-review`, `full-auto` | `full-auto` for Quick Start | 工作流模式。`full-auto` 会自动完成提取、分析、渲染和验证；`safe-review` 适合先检查中间文件再继续。 |
-| `layout` | `3col`, `4col` | `3col` | 首选检查版式。Full Auto 仍会生成 3 栏和 4 栏两个 HTML。 |
-| `target_pages` | 正整数 | `1` | 内容预算，不是绝对 PDF 页数保证。页数越少压缩越强。 |
-| `coverage_mode` | `exam-compact`, `balanced-standard`, `comprehensive-review` | `balanced-standard` | 控制 topic 覆盖范围。 |
-| `detail_mode` | `simple`, `balanced`, `detailed` | `balanced` | 控制已选 topic 的细节程度。 |
+| `workflow_mode` | `safe-review`, `full-auto` | 首次使用推荐 `full-auto` | 控制自动化程度。 |
+| `layout` | `3col`, `4col` | `3col` | 用于检查和验证的首选布局。Full Auto 仍会渲染两个 HTML 文件。 |
+| `target_pages` | 正整数 | `1` | 内容预算，不是精确的打印页数保证。 |
+| `coverage_mode` | `exam-compact`, `balanced-standard`, `comprehensive-review` | `balanced-standard` | 控制纳入哪些主题。 |
+| `detail_mode` | `simple`, `balanced`, `detailed` | `balanced` | 控制已纳入主题的细节程度。 |
 
-推荐组合：
+推荐预设：
 
 | 使用场景 | 参数 |
 |---|---|
-| 考前一页速记 | `target_pages = 1`, `coverage_mode = exam-compact`, `detail_mode = simple` |
-| 默认复习版 | `target_pages = 1`, `coverage_mode = balanced-standard`, `detail_mode = balanced` |
-| 两页全面复习版 | `target_pages = 2`, `coverage_mode = comprehensive-review`, `detail_mode = balanced` |
-| 先人工检查再生成 | `workflow_mode = safe-review`, 其他参数按需要设置 |
-
-更详细的参数解释见 [`QUICK_START.md`](QUICK_START.md)。
-
----
+| 一页考前速记 sheet | `target_pages = 1`, `coverage_mode = exam-compact`, `detail_mode = simple` |
+| 默认复习 sheet | `target_pages = 1`, `coverage_mode = balanced-standard`, `detail_mode = balanced` |
+| 两页综合复习 | `target_pages = 2`, `coverage_mode = comprehensive-review`, `detail_mode = balanced` |
+| 先检查，之后再渲染 | `workflow_mode = safe-review`, 其他参数按需设置 |
 
 ## 工作流概览
 
 ```text
 course materials
-  ↓ extract_materials.py
+  -> extract_materials.py
 working/extracted/
-  ↓ build_candidate_units.py
+  -> build_candidate_units.py
 working/candidate_units.jsonl
-  ↓ Codex reasoning with SKILL.md
+  -> Codex reasoning with SKILL.md
 working/run_config.md
 working/knowledge_units.md
 working/topic_map.md
 working/importance_ranking.md
 working/topic_evidence_map.md
 working/cheatsheet_content.md
-  ↓ build_html.py
+  -> build_html.py
 outputs/cheatsheet_3col.html
 outputs/cheatsheet_4col.html
-  ↓ optional browser export
-PDF
+  -> optional browser PDF export
 ```
 
-注意：`build_html.py` 只负责把已经存在的 `working/cheatsheet_content.md` 渲染成 HTML。它不会自动分析课程材料，也不会自动决定哪些 topic 重要。
+`build_html.py` 只会把已有的 `working/cheatsheet_content.md` 文件渲染成 HTML。它不会分析课程资料，也不会决定主题重要性。
 
----
-
-## 环境要求
+## 要求
 
 推荐使用 Python 3.9+。
 
-可选文本提取依赖列在 `requirements.txt` 中：
+`requirements.txt` 中的依赖是可选的文本提取辅助工具：
 
 ```text
 pymupdf
@@ -253,50 +231,59 @@ python-pptx
 python-docx
 ```
 
-OCR 暂不属于本 skill 的范围。对于没有可选中文本的扫描版 PDF，脚本会报告该文件没有可提取文本。
+只有当你需要完整的 PDF、PPTX 和 DOCX 文本提取支持时才安装它们。
+
+OCR 有意不包含在范围内。没有可选中文本的扫描版 PDF 会被报告为没有可提取文本。
+
+## 版权说明
+
+不要把以下内容提交到公开仓库：
+
+- 受版权保护的课程资料；
+- 从课程资料中提取的文本；
+- 基于私人课程资料生成的 `working/` 文件；
+- 基于私人课程资料生成的 `outputs/` 文件。
+
+仓库中的 `courses/COURSE_NAME/` 文件夹应该保持为空 scaffold。除非你有权发布源资料和生成的衍生内容，否则请保持真实课程项目私有。
+
+## 许可证
+
+MIT License。请查看 [LICENSE](LICENSE)。
+
 
 ---
 
-## 版权提醒
+# course-cheatsheet-maker
 
-不要将以下内容提交到公开仓库：
+`course-cheatsheet-maker` is an installable Codex-style skill for turning course materials into compact A4 landscape cheatsheets.
 
-- 有版权的课程材料；
-- 从课程材料中提取出的文本；
-- 基于私有课程材料生成的 `working/` 文件；
-- 基于私有课程材料生成的最终 HTML/PDF 输出。
+It helps a coding agent:
 
-本仓库中的 `courses/COURSE_NAME/` 只应保留空模板或 `.gitkeep` 占位文件。真实课程项目应保持私有，除非你已经获得发布源材料和衍生产物的授权。
-
----
-
-## License
-
-MIT License. See [`LICENSE`](LICENSE).
-
----
-
-# English
-
-`course-cheatsheet-maker` is an installable Codex-style skill for creating compact A4 landscape course cheatsheets from course materials.
-
-It helps an agent:
-
-- extract text from PDFs, PPTX, DOCX, TXT, Markdown, and similar course files;
+- extract text from PDF, PPTX, DOCX, TXT, and Markdown course files;
+- separate knowledge sources from question-like sources;
 - build traceable candidate knowledge units;
-- infer topic importance from both knowledge sources and question-like sources;
-- create reviewable intermediate artifacts;
+- rank topic importance from course emphasis and assessment evidence;
+- create reviewable working files before rendering;
 - render printable 3-column and 4-column HTML cheatsheets.
 
-HTML/CSS is the source of truth for layout. PDF export is optional and should preserve the printed HTML layout as closely as possible.
-
-> **Important:** A correct installation includes `courses/COURSE_NAME/`. This bundled empty starter scaffold provides `materials/knowledge/`, `materials/questions/`, `working/`, and `outputs/` so beginners do not have to create those folders by hand. Keep it as a template, and do not commit real course materials to a public repository.
-
----
+HTML/CSS is the source of truth for layout. PDF export is optional and is usually done from the browser print dialog.
 
 ## What This Repository Contains
 
-This repository contains both the installable skill files and an empty course scaffold that is included in the release install.
+This GitHub repository contains two things:
+
+1. the reusable runtime skill package files; and
+2. a starter course scaffold at `courses/COURSE_NAME/`.
+
+The starter scaffold is included so first-time users can see the required course folder shape without creating every folder by hand. It is not a real course, and it should not contain public course materials.
+
+Hidden `.gitkeep` files inside `courses/COURSE_NAME/` are allowed. They only keep empty starter scaffold folders tracked by Git; they are not real course materials and do not count as generated outputs.
+
+Repository documentation files such as `README.md`, `QUICK_START.md`, and `INSTALL.md` are for GitHub users and installers only. They belong in this repository, but they are not part of the installed runtime skill folder.
+
+## Repository Structure
+
+The public repository may include documentation and repository metadata:
 
 ```text
 course-cheatsheet-maker/
@@ -312,33 +299,55 @@ course-cheatsheet-maker/
         questions/
       working/
       outputs/
-  INSTALL.md
-  QUICK_START.md
   README.md
+  QUICK_START.md
+  INSTALL.md
+  LICENSE
+  .gitignore
 ```
 
 Path roles:
 
 | Path | Purpose |
 |---|---|
-| `SKILL.md` | Core skill instructions used by Codex/Agent. |
-| `scripts/` | Helper scripts for extraction, candidate-unit building, HTML rendering, and validation. |
-| `assets/` | 3-column and 4-column HTML templates. |
-| `references/` | Importance ranking, content compression, and layout guidelines. |
-| `courses/COURSE_NAME/` | Empty course scaffold showing where course materials should go. |
+| `SKILL.md` | Core skill instructions used by Codex or another coding agent. |
+| `requirements.txt` | Optional Python extraction dependencies. |
+| `scripts/` | Helper scripts for extraction, candidate-unit building, HTML rendering, PDF guidance, and validation. |
+| `assets/` | HTML templates and rendering assets. |
+| `references/` | Rubrics and guidance used by the skill. |
+| `courses/COURSE_NAME/` | Empty starter scaffold for first-time users. |
+| `README.md`, `QUICK_START.md`, `INSTALL.md` | Repository documentation only. Do not copy these into the installed runtime skill folder. |
 
-`courses/COURSE_NAME/` is a template, not a fixed course name. In real use, copy or rename it to your actual course name, such as `COMP7503`, `MATH101`, or `DATABASE`.
+## Installed Skill Structure
 
----
+After installation, the global skill folder should contain only the runtime package:
 
-## Skill Location vs. Course Material Location
+```text
+~/.agents/skills/course-cheatsheet-maker/
+  SKILL.md
+  requirements.txt
+  scripts/
+  assets/
+  references/
+  courses/
+    COURSE_NAME/
+      materials/
+        knowledge/
+        questions/
+      working/
+      outputs/
+```
+
+The installed skill folder should not include repository-only files such as `README.md`, `QUICK_START.md`, `INSTALL.md`, `LICENSE`, `.gitignore`, `.git/`, or `__pycache__/`.
+
+## Skill Location vs. Course Project Location
 
 Keep these two locations separate:
 
-1. **Skill installation location**: contains `SKILL.md`, `scripts/`, `assets/`, related skill files, and the empty `courses/COURSE_NAME/` starter scaffold.
-2. **Course material location**: contains your own lecture notes, slides, quizzes, past papers, and other course files.
+1. **Global skill installation folder**: contains the reusable skill package and the empty `courses/COURSE_NAME/` scaffold.
+2. **Private course project folder**: contains your real lecture notes, slides, quizzes, past papers, generated working files, and generated outputs.
 
-For Codex-style setups, a typical global skill installation path is:
+Typical global skill location:
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
@@ -350,11 +359,7 @@ On Windows, this usually corresponds to:
 C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
 ```
 
-Do not put real course materials inside the global skill installation directory.
-
-The global skill install may include the empty `courses/COURSE_NAME` scaffold, but real course materials should stay in your private course project.
-
-A recommended private course project looks like this:
+Real course materials should live in your own private course project, not inside the global skill install directory. A private course project can look like this:
 
 ```text
 my-course-project/
@@ -367,30 +372,15 @@ my-course-project/
       outputs/
 ```
 
-For a quick local test, you may copy the bundled `courses/COURSE_NAME/` scaffold inside this repository. Do not commit real course materials to a public repository.
-
----
+Use the installed `courses/COURSE_NAME/` scaffold as a template. Copy it into your private course project and rename the copy to your real course name, such as `COMP7503`, `MATH101`, or `DATABASE`.
 
 ## Quick Use
 
-See [`QUICK_START.md`](QUICK_START.md) for detailed steps. Minimal flow:
+See [QUICK_START.md](QUICK_START.md) for the first-run guide. The short version is:
 
-1. Install and validate the skill using [`INSTALL.md`](INSTALL.md).
-2. Copy the course scaffold:
-
-```bash
-mkdir -p courses
-cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
-```
-
-Windows PowerShell：
-
-```powershell
-New-Item -ItemType Directory -Force courses
-Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
-```
-
-3. Put course materials in:
+1. Install the skill by following [INSTALL.md](INSTALL.md).
+2. Copy `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/` into your own course project, for example `courses/COMP7503/`.
+3. Put materials into:
 
 ```text
 courses/COMP7503/materials/knowledge/
@@ -415,14 +405,12 @@ detail_mode = balanced
 Please run extraction, build candidate units, create all required working artifacts, generate cheatsheet_content.md, render both HTML outputs, and run validation.
 ```
 
-5. Check the outputs:
+5. Check the generated HTML files:
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 courses/COMP7503/outputs/cheatsheet_4col.html
 ```
-
----
 
 ## Where Course Materials Go
 
@@ -432,49 +420,27 @@ Put knowledge sources in:
 courses/COURSE_NAME/materials/knowledge/
 ```
 
-Good sources for `knowledge/` include:
+Good `knowledge/` sources include lecture slides, lecture notes, handouts, textbook excerpts, tutorial explanations, and review notes.
 
-```text
-lecture slides
-lecture notes
-course handouts
-textbook excerpts
-tutorial explanations
-review notes
-```
-
-Put question-like sources in:
+Put question-like or assessment-related sources in:
 
 ```text
 courses/COURSE_NAME/materials/questions/
 ```
 
-Good sources for `questions/` include:
-
-```text
-quiz
-assignment
-tutorial questions
-workshop questions
-problem sets
-sample exams
-mock exams
-past papers
-```
+Good `questions/` sources include quizzes, assignments, tutorial questions, workshop questions, problem sets, sample exams, mock exams, and past papers.
 
 Subfolders inside `knowledge/` and `questions/` are supported.
-
----
 
 ## Parameter Overview
 
 | Parameter | Values | Recommended Default | Meaning |
 |---|---|---|---|
-| `workflow_mode` | `safe-review`, `full-auto` | `full-auto` for Quick Start | Workflow mode. `full-auto` runs extraction, analysis, rendering, and validation automatically. `safe-review` is better when you want to inspect intermediate artifacts before continuing. |
-| `layout` | `3col`, `4col` | `3col` | Preferred layout for review and validation. Full Auto still renders both 3-column and 4-column HTML files. |
-| `target_pages` | positive integer | `1` | Content budget, not an absolute PDF page guarantee. Fewer pages means stronger compression. |
-| `coverage_mode` | `exam-compact`, `balanced-standard`, `comprehensive-review` | `balanced-standard` | Controls topic coverage. |
-| `detail_mode` | `simple`, `balanced`, `detailed` | `balanced` | Controls how much detail selected topics receive. |
+| `workflow_mode` | `safe-review`, `full-auto` | `full-auto` for first use | Controls automation level. |
+| `layout` | `3col`, `4col` | `3col` | Preferred layout for review and validation. Full Auto still renders both HTML files. |
+| `target_pages` | positive integer | `1` | Content budget, not an exact printed-page guarantee. |
+| `coverage_mode` | `exam-compact`, `balanced-standard`, `comprehensive-review` | `balanced-standard` | Controls which topics are included. |
+| `detail_mode` | `simple`, `balanced`, `detailed` | `balanced` | Controls how much detail included topics receive. |
 
 Recommended presets:
 
@@ -485,41 +451,34 @@ Recommended presets:
 | Two-page comprehensive review | `target_pages = 2`, `coverage_mode = comprehensive-review`, `detail_mode = balanced` |
 | Review first, render later | `workflow_mode = safe-review`, other parameters as needed |
 
-See [`QUICK_START.md`](QUICK_START.md) for more detailed parameter explanations.
-
----
-
 ## Workflow Overview
 
 ```text
 course materials
-  ↓ extract_materials.py
+  -> extract_materials.py
 working/extracted/
-  ↓ build_candidate_units.py
+  -> build_candidate_units.py
 working/candidate_units.jsonl
-  ↓ Codex reasoning with SKILL.md
+  -> Codex reasoning with SKILL.md
 working/run_config.md
 working/knowledge_units.md
 working/topic_map.md
 working/importance_ranking.md
 working/topic_evidence_map.md
 working/cheatsheet_content.md
-  ↓ build_html.py
+  -> build_html.py
 outputs/cheatsheet_3col.html
 outputs/cheatsheet_4col.html
-  ↓ optional browser export
-PDF
+  -> optional browser PDF export
 ```
 
-Note: `build_html.py` only renders an existing `working/cheatsheet_content.md` file into HTML. It does not analyze course materials or decide which topics are important.
-
----
+`build_html.py` only renders an existing `working/cheatsheet_content.md` file into HTML. It does not analyze course materials or decide topic importance.
 
 ## Requirements
 
 Python 3.9+ is recommended.
 
-Optional extraction dependencies are listed in `requirements.txt`:
+The dependencies in `requirements.txt` are optional extraction helpers:
 
 ```text
 pymupdf
@@ -527,9 +486,9 @@ python-pptx
 python-docx
 ```
 
-OCR is intentionally out of scope. Scanned PDFs with no selectable text will be reported as having no extractable text.
+Install them only when you want full PDF, PPTX, and DOCX text extraction support.
 
----
+OCR is intentionally out of scope. Scanned PDFs with no selectable text will be reported as having no extractable text.
 
 ## Copyright Note
 
@@ -538,12 +497,10 @@ Do not commit the following to a public repository:
 - copyrighted course materials;
 - text extracted from course materials;
 - generated `working/` files based on private course materials;
-- final HTML/PDF outputs based on private course materials.
+- generated `outputs/` files based on private course materials.
 
-The bundled `courses/COURSE_NAME/` should only contain an empty scaffold or `.gitkeep` placeholder files. Keep real course projects private unless you have permission to publish both the source materials and generated derivatives.
-
----
+The repository's `courses/COURSE_NAME/` folder should stay as an empty scaffold. Keep real course projects private unless you have permission to publish both the source materials and generated derivatives.
 
 ## License
 
-MIT License. See [`LICENSE`](LICENSE).
+MIT License. See [LICENSE](LICENSE).

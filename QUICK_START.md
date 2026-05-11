@@ -1,68 +1,27 @@
-# Quick Start / 快速开始
+# 快速开始（中文版）
 
-[中文](#中文) | [English](#english)
+本指南面向安装后的第一次使用者。它假设你想用 `course-cheatsheet-maker` 处理自己的私人课程资料。
 
----
+重要概念：安装后的 skill 文件夹是可复用的 runtime package。你的真实课程文件应该放在你自己的课程项目里，而不是全局 skill 安装目录里。
 
-## 中文
+## 第 1 步：安装 Skill
 
-`course-cheatsheet-maker` 是一个可安装的 Codex 风格 skill，用于根据课程材料生成 A4 横版课程 cheatsheet。
+按照 [INSTALL.md](INSTALL.md) 安装 skill。
 
-这个 Quick Start 面向第一次使用的新用户。你需要完成四件事：
-
-1. 安装 skill；
-2. 从 `courses/COURSE_NAME/` 复制一个课程模板；
-3. 放入课程材料；
-4. 把使用 prompt 复制给 Codex。
-
----
-
-## 0. 先理解两个目录
-
-这个项目里有两个容易混淆的概念：
-
-| 概念 | 作用 | 示例 |
-|---|---|---|
-| skill 安装目录 | 放 `SKILL.md`、`scripts/`、`assets/` 等 skill 文件，以及空的 `courses/COURSE_NAME/` starter scaffold | `~/.agents/skills/course-cheatsheet-maker/` |
-| 课程目录 | 放你的真实课程材料和生成结果 | `courses/COMP7503/` |
-
-本仓库现在自带一个空模板：
-
-```text
-courses/COURSE_NAME/
-  materials/
-    knowledge/
-    questions/
-  working/
-  outputs/
-```
-
-`COURSE_NAME` 只是占位名。实际使用时，请复制或改名成真实课程名，例如 `COMP7503`。
-
-安装后，这个 bundled scaffold 通常位于 skill 安装目录里的 `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/`。
-
----
-
-## 1. 安装 Skill
-
-先按照 `INSTALL.md` 安装并验证 skill。
-
-你也可以把下面这段话复制给 Codex / 支持 skills 的 Agent：
+你也可以向 Codex 或其他 coding agent 发送：
 
 ```text
 Install and validate the course-cheatsheet-maker skill by following this guide:
 https://raw.githubusercontent.com/tsukiR1n/course-cheatsheet-maker/main/INSTALL.md
 ```
 
-安装成功后，本地通常会出现这个目录：
+## 第 2 步：确认安装后的 Skill 文件夹是干净的
+
+安装后，该文件夹应该只包含 runtime skill package：
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
   SKILL.md
-  README.md
-  QUICK_START.md
-  INSTALL.md
-  LICENSE
   requirements.txt
   scripts/
   assets/
@@ -76,27 +35,17 @@ https://raw.githubusercontent.com/tsukiR1n/course-cheatsheet-maker/main/INSTALL.
       outputs/
 ```
 
-Windows 上通常对应：
+安装后的文件夹不应该包含 `README.md`、`QUICK_START.md`、`INSTALL.md`、`LICENSE`、`.gitignore`、`.git/`、`__pycache__/`、真实课程资料，或来自真实课程的生成输出。
 
-```text
-C:\Users\<你的用户名>\.agents\skills\course-cheatsheet-maker\
-```
+`courses/COURSE_NAME/` 只是 starter scaffold。它不是真实课程，也不是用来存放公开课程资料的位置。
 
-这个目录是 skill 的安装位置，不是课程材料目录。
+`courses/COURSE_NAME/` 内隐藏的 `.gitkeep` 文件是允许存在的。它们只是为了让 Git 跟踪空的 starter scaffold 文件夹；它们不是真实课程资料，也不算生成输出。
 
-空的 `courses/COURSE_NAME/` scaffold 位于这个已安装的 skill 目录中。真实课程材料仍应放在你自己的课程项目里。
+## 第 3 步：复制 Starter Course Scaffold
 
----
+创建你自己的课程项目文件夹，然后从已安装的 skill 文件夹中把 starter scaffold 复制到该项目里。
 
-## 2. 创建课程目录
-
-已安装的 skill 目录中已经提供了一个空课程模板：
-
-```text
-~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/
-```
-
-第一次使用时，从已安装的 skill 目录复制这个模板到当前课程项目，并把 `COMP7503` 换成你的真实课程名。
+示例目标课程名：`COMP7503`。
 
 macOS / Linux / Git Bash：
 
@@ -109,21 +58,10 @@ Windows PowerShell：
 
 ```powershell
 New-Item -ItemType Directory -Force courses
-Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
+Copy-Item -LiteralPath "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" -Destination "courses\COMP7503" -Recurse -Force
 ```
 
-复制后结构应该类似：
-
-```text
-courses/COMP7503/
-  materials/
-    knowledge/
-    questions/
-  working/
-  outputs/
-```
-
-如果你不想在 skill 仓库里测试，可以把这个模板复制到自己的私有课程项目里。只有在 scaffold 缺失时，才需要手动补出同样的结构：
+复制后，你的私人课程项目应该长这样：
 
 ```text
 my-course-project/
@@ -136,45 +74,25 @@ my-course-project/
       outputs/
 ```
 
----
+把 `COMP7503` 替换成你的真实课程文件夹名。
 
-## 3. 准备课程材料
+## 第 4 步：添加课程资料
 
-把课程知识类材料放入：
+把 lecture 和 knowledge sources 放在这里：
 
 ```text
 courses/COMP7503/materials/knowledge/
 ```
 
-适合放在 `knowledge/` 的材料包括：
+适合的例子包括 lecture slides、lecture notes、review notes、handouts、textbook excerpts 和 tutorial explanations。
 
-```text
-lecture slides
-lecture notes
-course handouts
-textbook excerpts
-tutorial explanations
-review notes
-```
-
-把题目类材料放入：
+把 question-like 或 assessment-related sources 放在这里：
 
 ```text
 courses/COMP7503/materials/questions/
 ```
 
-适合放在 `questions/` 的材料包括：
-
-```text
-quiz
-assignment
-tutorial questions
-workshop questions
-problem sets
-sample exams
-mock exams
-past papers
-```
+适合的例子包括 quizzes、assignments、tutorial questions、workshop questions、problem sets、sample exams、mock exams 和 past papers。
 
 示例：
 
@@ -185,166 +103,17 @@ courses/COMP7503/materials/questions/past_paper_2024.pdf
 courses/COMP7503/materials/questions/workshop_03.pdf
 ```
 
-`knowledge/` 和 `questions/` 内部可以继续创建子文件夹。
+`knowledge/` 和 `questions/` 内部支持子文件夹。
 
-不要把真实课程材料提交到公开仓库。如果这个仓库要发布到 GitHub，请确保 `.gitignore` 会忽略真实材料、`working/` 和 `outputs/` 中的生成结果。
+## 第 5 步：运行示例 Prompt
 
----
-
-## 4. 参数说明
-
-你可以在 prompt 中调整以下五个参数。
-
-### 4.1 `workflow_mode`
-
-控制自动化程度。
-
-| 值 | 含义 | 适合场景 |
-|---|---|---|
-| `full-auto` | 自动完成提取、候选单元构建、topic 分析、cheatsheet 内容生成、HTML 渲染和验证。 | 新手第一次跑完整流程。 |
-| `safe-review` | 先生成并检查中间分析文件，再决定是否继续渲染最终 HTML。 | 课程材料很多、你想先看 topic ranking 是否合理。 |
-
-Quick Start 推荐显式使用：
-
-```text
-workflow_mode = full-auto
-```
-
-### 4.2 `layout`
-
-控制首选检查版式。
-
-| 值 | 含义 |
-|---|---|
-| `3col` | 3 栏 A4 横版，默认推荐，更稳定、更易读。 |
-| `4col` | 4 栏 A4 横版，更紧凑，但可读性可能下降。 |
-
-注意：Full Auto 通常仍会生成两个 HTML：
-
-```text
-cheatsheet_3col.html
-cheatsheet_4col.html
-```
-
-`layout` 主要决定优先检查和验证哪个版本。
-
-### 4.3 `target_pages`
-
-控制总内容预算。
-
-```text
-target_pages = 1
-```
-
-它不是绝对 PDF 页数保证，而是内容压缩目标。页数越少，内容筛选越严格；页数越多，覆盖面越广。
-
-常见选择：
-
-| 值 | 适合场景 |
-|---|---|
-| `1` | 考前速查、强压缩 cheatsheet。 |
-| `2` | 更完整的复习版，适合 comprehensive review。 |
-| `3` | 覆盖更多 topic，但内容会明显变长。 |
-
-### 4.4 `coverage_mode`
-
-控制 topic 选择范围。
-
-| 值 | 含义 |
-|---|---|
-| `exam-compact` | 偏考试重点，优先保留高频、高证据、高风险 topic。 |
-| `balanced-standard` | 默认平衡模式，在覆盖面和压缩度之间折中。 |
-| `comprehensive-review` | 尽量覆盖更多 lecture/topic，适合系统复习。 |
-
-内部 ranking 通常会把 topic 分成：
-
-| 类别 | 含义 |
-|---|---|
-| A | 必须掌握，高价值、高证据、高风险 topic。 |
-| B | 重要 topic，通常应保留。 |
-| C | 较低优先级或补充 topic，根据页数选择代表性内容。 |
-| R | 参考类或低频内容，通常只在多页或特殊需要时保留。 |
-
-### 4.5 `detail_mode`
-
-控制每个已选 topic 写多细。
-
-| 值 | 含义 |
-|---|---|
-| `simple` | 更像速查表，定义、公式、关键词优先，解释很少。 |
-| `balanced` | 默认模式，兼顾概念、公式、陷阱、简短例子。 |
-| `detailed` | 更像学习版，对重要 topic 给更多解释和对比。 |
-
-注意：`coverage_mode` 决定“选哪些 topic”，`detail_mode` 决定“选中的 topic 写多细”。
-
----
-
-## 5. 推荐参数组合
-
-### 考前一页速记
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 1
-coverage_mode = exam-compact
-detail_mode = simple
-```
-
-### 默认复习版
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 1
-coverage_mode = balanced-standard
-detail_mode = balanced
-```
-
-### 两页全面复习版
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 2
-coverage_mode = comprehensive-review
-detail_mode = balanced
-```
-
-### 先检查 topic ranking 再生成
-
-```text
-workflow_mode = safe-review
-layout = 3col
-target_pages = 2
-coverage_mode = comprehensive-review
-detail_mode = balanced
-```
-
----
-
-## 6. 使用 Skill 生成 Cheatsheet
-
-在课程项目根目录打开 Codex。
-
-如果你的课程结构是：
-
-```text
-my-course-project/
-  courses/
-    COMP7503/
-      materials/
-        knowledge/
-        questions/
-```
-
-那么你应该在这个目录打开 Codex：
+从你的私人课程项目根目录打开 Codex：
 
 ```text
 my-course-project/
 ```
 
-然后复制下面这个 prompt 给 Codex：
+然后发送这个 prompt：
 
 ```text
 Use $course-cheatsheet-maker for COMP7503.
@@ -362,37 +131,24 @@ detail_mode = balanced
 Please run extraction, build candidate units, create all required working artifacts, generate cheatsheet_content.md, render both HTML outputs, and run validation.
 ```
 
-如果你的课程名不是 `COMP7503`，请把 prompt 里的 `COMP7503` 全部替换成你的课程文件夹名。
+如果你的课程文件夹不叫 `COMP7503`，请把 prompt 中每一个 `COMP7503` 替换成你的实际课程文件夹名。
 
----
+## 检查输出
 
-## 7. 查看输出结果
-
-生成结果会出现在：
-
-```text
-courses/COMP7503/outputs/
-```
-
-通常会生成：
+生成的 HTML 文件会出现在这里：
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 courses/COMP7503/outputs/cheatsheet_4col.html
 ```
 
-其中：
-
-- `cheatsheet_3col.html`：默认推荐版本，三栏 A4 横版；
-- `cheatsheet_4col.html`：更紧凑版本，适合内容较多但可读性可能更低。
-
-中间分析文件会出现在：
+Working 和 traceability 文件会出现在这里：
 
 ```text
 courses/COMP7503/working/
 ```
 
-常见中间文件包括：
+常见 working 文件包括：
 
 ```text
 courses/COMP7503/working/run_config.md
@@ -406,76 +162,25 @@ courses/COMP7503/working/topic_evidence_map.md
 courses/COMP7503/working/cheatsheet_content.md
 ```
 
----
+## 新手说明
 
-## 8. 什么是 `--root`
+`workflow_mode = full-auto` 会在一个流程中运行提取、分析、渲染和验证。
 
-手动运行脚本时，你会看到：
+`layout = 3col` 是推荐的初始布局。Full Auto 仍然会渲染 `cheatsheet_3col.html` 和 `cheatsheet_4col.html` 两个文件。
 
-```text
---root courses
-```
+`target_pages = 1` 是内容预算，不是精确的页数保证。浏览器打印设置仍然可能影响最终 PDF 页数。
 
-`--root` 的意思是：**包含课程文件夹的上一级目录**。
+`coverage_mode` 控制包含哪些主题。`detail_mode` 控制已包含主题的细节量。
 
-例如：
+## 可选 PDF 导出
 
-```text
-courses/COMP7503/
-```
-
-这里：
-
-```text
-course_name = COMP7503
---root = courses
-```
-
-所以命令写成：
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-```
-
-如果你的课程目录在别的地方，例如：
-
-```text
-/private/my-course-project/courses/COMP7503/
-```
-
-你可以先进入：
-
-```text
-/private/my-course-project/
-```
-
-然后仍然使用：
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-```
-
-或者从任意目录显式传入完整路径：
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root /private/my-course-project/courses
-```
-
-一句话总结：`--root` 指向“装着课程文件夹的目录”，不是 skill 安装目录。
-
----
-
-## 9. 导出 PDF
-
-本 skill 的主要输出是 HTML。
-
-你可以用浏览器打开：
+主要输出是 HTML。若要导出 PDF，请打开：
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 ```
 
-然后使用浏览器打印功能导出 PDF：
+然后使用浏览器打印对话框：
 
 ```text
 Ctrl + P / Cmd + P
@@ -486,141 +191,45 @@ Margins: None or Minimum
 Background graphics: On
 ```
 
-建议优先导出 `cheatsheet_3col.html`，因为它通常更稳定、更易读。
+## 常见错误
 
----
-
-## 10. 常见误区
-
-### 误区 1：直接运行 `build_html.py` 就能自动生成 cheatsheet
-
-不可以。
-
-`build_html.py` 只负责把已经写好的：
-
-```text
-working/cheatsheet_content.md
-```
-
-渲染成 HTML。
-
-它不会自动分析课程材料，也不会自动决定哪些内容应该放进 cheatsheet。材料理解、topic ranking、内容筛选、压缩和 `cheatsheet_content.md` 写作，需要由 Codex 按照 `$course-cheatsheet-maker` 的工作流完成。
-
-### 误区 2：把真实课程材料提交到公开仓库
-
-不要这样做。
-
-`courses/COURSE_NAME/` 是空模板。真实材料只应保留在本地或私有项目中。
-
-### 误区 3：在错误的目录打开 Codex
-
-推荐在课程项目根目录打开 Codex，例如：
-
-```text
-my-course-project/
-```
-
-不推荐在全局 skill 安装目录里操作：
+不要把真实课程资料放进：
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
 ```
 
-### 误区 4：把 `target_pages` 理解成绝对页数保证
+不要只运行 `build_html.py` 然后期待它完成完整课程分析。该脚本只会渲染已经写好的 `working/cheatsheet_content.md`。
 
-`target_pages` 是内容预算和压缩目标，不是绝对打印页数保证。最终 PDF 页数仍可能受到浏览器、字体、缩放、纸张设置等影响。
+不要把私人课程资料、提取文本、`working/` 文件或生成的 `outputs/` 文件提交到公开仓库。
 
----
-
-## 11. Advanced: 手动脚本命令
-
-新手一般不需要手动运行这些命令，推荐先使用上面的 Codex prompt。
-
-下面的命令主要适合调试或高级用户。这些脚本不会替代 Agent 的推理步骤，尤其是 `build_html.py` 要求 `working/cheatsheet_content.md` 已经存在。
-
-macOS / Linux / Git Bash：
-
-```bash
-SKILL_DIR="$HOME/.agents/skills/course-cheatsheet-maker"
-
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/build_candidate_units.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/build_html.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/validate_workflow.py" COMP7503 --root courses --mode full-auto --layout 3col --target-pages 1 --coverage-mode balanced-standard --detail-mode balanced
-```
-
-Windows PowerShell：
-
-```powershell
-$env:SKILL_DIR="$HOME\.agents\skills\course-cheatsheet-maker"
-
-python "$env:SKILL_DIR\scripts\extract_materials.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\build_candidate_units.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\build_html.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\validate_workflow.py" COMP7503 --root courses --mode full-auto --layout 3col --target-pages 1 --coverage-mode balanced-standard --detail-mode balanced
-```
 
 ---
 
-# English
+# Quick Start
 
-`course-cheatsheet-maker` is an installable Codex-style skill for creating A4 landscape course cheatsheets from course materials.
+This guide is for first-time users after installation. It assumes you want to use `course-cheatsheet-maker` with your own private course materials.
 
-This Quick Start is for first-time users. You need to do four things:
+The important idea: the installed skill folder is the reusable runtime package. Your real course files should live in your own course project, not inside the global skill install directory.
 
-1. install the skill;
-2. copy a course scaffold from `courses/COURSE_NAME/`;
-3. put in your course materials;
-4. copy the usage prompt to Codex.
+## Step 1: Install The Skill
 
----
+Install the skill by following [INSTALL.md](INSTALL.md).
 
-## 0. Understand The Two Directories First
-
-There are two concepts that are easy to confuse:
-
-| Concept | Purpose | Example |
-|---|---|---|
-| Skill installation directory | Contains `SKILL.md`, `scripts/`, `assets/`, other skill files, and the empty `courses/COURSE_NAME/` starter scaffold. | `~/.agents/skills/course-cheatsheet-maker/` |
-| Course directory | Contains your real course materials and generated outputs. | `courses/COMP7503/` |
-
-This repository now includes an empty scaffold:
-
-```text
-courses/COURSE_NAME/
-  materials/
-    knowledge/
-    questions/
-  working/
-  outputs/
-```
-
-`COURSE_NAME` is only a placeholder. In real use, copy or rename it to an actual course name, such as `COMP7503`.
-
-After installation, this bundled scaffold is usually inside the installed skill directory at `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/`.
-
----
-
-## 1. Install The Skill
-
-First, install and validate the skill using `INSTALL.md`.
-
-You can also copy this prompt to Codex or another Agent that supports skills:
+You can also ask Codex or another coding agent:
 
 ```text
 Install and validate the course-cheatsheet-maker skill by following this guide:
 https://raw.githubusercontent.com/tsukiR1n/course-cheatsheet-maker/main/INSTALL.md
 ```
 
-After installation, you should typically have:
+## Step 2: Confirm The Installed Skill Folder Is Clean
+
+After installation, the folder should contain only the runtime skill package:
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
   SKILL.md
-  README.md
-  QUICK_START.md
-  INSTALL.md
-  LICENSE
   requirements.txt
   scripts/
   assets/
@@ -634,27 +243,17 @@ After installation, you should typically have:
       outputs/
 ```
 
-On Windows, this usually corresponds to:
+The installed folder should not contain `README.md`, `QUICK_START.md`, `INSTALL.md`, `LICENSE`, `.gitignore`, `.git/`, `__pycache__/`, real course materials, or generated outputs from real courses.
 
-```text
-C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
-```
+`courses/COURSE_NAME/` is only a starter scaffold. It is not a real course and it is not a place to store public course materials.
 
-This is the skill installation directory, not the course material directory.
+Hidden `.gitkeep` files inside `courses/COURSE_NAME/` are allowed. They only keep empty starter scaffold folders tracked by Git; they are not real course materials and do not count as generated outputs.
 
-The empty `courses/COURSE_NAME/` scaffold lives inside this installed skill directory. Real course materials should still stay in your own course project.
+## Step 3: Copy The Starter Course Scaffold
 
----
+Create your own course project folder, then copy the starter scaffold from the installed skill folder into that project.
 
-## 2. Create A Course Directory
-
-The installed skill directory already provides an empty course scaffold:
-
-```text
-~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/
-```
-
-For first use, copy this scaffold from the installed skill directory into your current course project, and replace `COMP7503` with your actual course name.
+Example target course name: `COMP7503`.
 
 macOS / Linux / Git Bash:
 
@@ -667,21 +266,10 @@ Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force courses
-Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
+Copy-Item -LiteralPath "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" -Destination "courses\COMP7503" -Recurse -Force
 ```
 
-After copying, the structure should look like:
-
-```text
-courses/COMP7503/
-  materials/
-    knowledge/
-    questions/
-  working/
-  outputs/
-```
-
-If you do not want to test inside the skill repository, copy the scaffold into your own private course project. Only recreate this structure by hand if the scaffold is missing:
+After copying, your private course project should look like:
 
 ```text
 my-course-project/
@@ -694,45 +282,25 @@ my-course-project/
       outputs/
 ```
 
----
+Replace `COMP7503` with your real course folder name.
 
-## 3. Prepare Course Materials
+## Step 4: Add Course Materials
 
-Put knowledge sources in:
+Put lecture and knowledge sources here:
 
 ```text
 courses/COMP7503/materials/knowledge/
 ```
 
-Good sources for `knowledge/` include:
+Good examples include lecture slides, lecture notes, review notes, handouts, textbook excerpts, and tutorial explanations.
 
-```text
-lecture slides
-lecture notes
-course handouts
-textbook excerpts
-tutorial explanations
-review notes
-```
-
-Put question-like sources in:
+Put question-like or assessment-related sources here:
 
 ```text
 courses/COMP7503/materials/questions/
 ```
 
-Good sources for `questions/` include:
-
-```text
-quiz
-assignment
-tutorial questions
-workshop questions
-problem sets
-sample exams
-mock exams
-past papers
-```
+Good examples include quizzes, assignments, tutorial questions, workshop questions, problem sets, sample exams, mock exams, and past papers.
 
 Example:
 
@@ -745,164 +313,15 @@ courses/COMP7503/materials/questions/workshop_03.pdf
 
 Subfolders inside `knowledge/` and `questions/` are supported.
 
-Do not commit real course materials to a public repository. If this repository is published on GitHub, make sure `.gitignore` excludes real materials, generated `working/` files, and generated `outputs/` files.
+## Step 5: Run The Example Prompt
 
----
-
-## 4. Parameters
-
-You can adjust the following five parameters in the prompt.
-
-### 4.1 `workflow_mode`
-
-Controls automation level.
-
-| Value | Meaning | Best For |
-|---|---|---|
-| `full-auto` | Runs extraction, candidate-unit building, topic analysis, cheatsheet content generation, HTML rendering, and validation. | First complete run for beginners. |
-| `safe-review` | Creates intermediate analysis artifacts first so you can inspect them before final rendering. | Large course sets or cases where you want to review topic ranking first. |
-
-Quick Start recommends explicitly using:
-
-```text
-workflow_mode = full-auto
-```
-
-### 4.2 `layout`
-
-Controls the preferred layout for review.
-
-| Value | Meaning |
-|---|---|
-| `3col` | 3-column A4 landscape layout. Recommended default; usually more stable and readable. |
-| `4col` | 4-column A4 landscape layout. Denser, but may be less readable. |
-
-Note: Full Auto usually still generates both HTML files:
-
-```text
-cheatsheet_3col.html
-cheatsheet_4col.html
-```
-
-`layout` mainly decides which version should be prioritized for review and validation.
-
-### 4.3 `target_pages`
-
-Controls the total content budget.
-
-```text
-target_pages = 1
-```
-
-It is not an absolute PDF page guarantee. It is a compression target. Fewer pages means stricter selection; more pages means wider coverage.
-
-Common choices:
-
-| Value | Best For |
-|---|---|
-| `1` | Compact exam cram sheet. |
-| `2` | More complete review sheet, especially for comprehensive review. |
-| `3` | Wider topic coverage, but much longer content. |
-
-### 4.4 `coverage_mode`
-
-Controls topic selection coverage.
-
-| Value | Meaning |
-|---|---|
-| `exam-compact` | Exam-focused. Prioritizes frequent, well-supported, high-risk topics. |
-| `balanced-standard` | Default balanced mode between coverage and compression. |
-| `comprehensive-review` | Covers more lectures/topics for systematic review. |
-
-Internally, topic ranking usually uses these classes:
-
-| Class | Meaning |
-|---|---|
-| A | Must-know, high-value, well-supported, or high-risk topics. |
-| B | Important topics that should usually be kept. |
-| C | Lower-priority or supporting topics; representative ones are selected depending on page budget. |
-| R | Reference or low-frequency material; usually included only for multi-page or special cases. |
-
-### 4.5 `detail_mode`
-
-Controls how much detail selected topics receive.
-
-| Value | Meaning |
-|---|---|
-| `simple` | Quick-reference style. Definitions, formulas, and keywords first; minimal explanations. |
-| `balanced` | Default mode. Balances concepts, formulas, traps, and compact examples. |
-| `detailed` | Study-guide style. Adds more explanation and comparison for important topics. |
-
-Important: `coverage_mode` decides which topics are selected. `detail_mode` decides how much detail selected topics receive.
-
----
-
-## 5. Recommended Presets
-
-### One-page exam cram sheet
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 1
-coverage_mode = exam-compact
-detail_mode = simple
-```
-
-### Default review sheet
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 1
-coverage_mode = balanced-standard
-detail_mode = balanced
-```
-
-### Two-page comprehensive review
-
-```text
-workflow_mode = full-auto
-layout = 3col
-target_pages = 2
-coverage_mode = comprehensive-review
-detail_mode = balanced
-```
-
-### Review topic ranking before final rendering
-
-```text
-workflow_mode = safe-review
-layout = 3col
-target_pages = 2
-coverage_mode = comprehensive-review
-detail_mode = balanced
-```
-
----
-
-## 6. Use The Skill To Generate A Cheatsheet
-
-Open Codex from your course project root.
-
-If your course structure is:
-
-```text
-my-course-project/
-  courses/
-    COMP7503/
-      materials/
-        knowledge/
-        questions/
-```
-
-Then open Codex in:
+Open Codex from your private course project root:
 
 ```text
 my-course-project/
 ```
 
-Copy this prompt to Codex:
+Then send this prompt:
 
 ```text
 Use $course-cheatsheet-maker for COMP7503.
@@ -920,37 +339,24 @@ detail_mode = balanced
 Please run extraction, build candidate units, create all required working artifacts, generate cheatsheet_content.md, render both HTML outputs, and run validation.
 ```
 
-If your course is not named `COMP7503`, replace every `COMP7503` in the prompt with your actual course folder name.
+If your course folder is not named `COMP7503`, replace every `COMP7503` in the prompt with your actual course folder name.
 
----
+## Check The Outputs
 
-## 7. Check The Outputs
-
-Rendered outputs will appear in:
-
-```text
-courses/COMP7503/outputs/
-```
-
-Usually, the skill generates:
+Generated HTML files appear here:
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 courses/COMP7503/outputs/cheatsheet_4col.html
 ```
 
-Meaning:
-
-- `cheatsheet_3col.html`: recommended default output, A4 landscape with three columns;
-- `cheatsheet_4col.html`: denser output, useful for more content but potentially less readable.
-
-Intermediate artifacts will appear in:
+Working and traceability files appear here:
 
 ```text
 courses/COMP7503/working/
 ```
 
-Common working artifacts include:
+Common working files include:
 
 ```text
 courses/COMP7503/working/run_config.md
@@ -964,76 +370,25 @@ courses/COMP7503/working/topic_evidence_map.md
 courses/COMP7503/working/cheatsheet_content.md
 ```
 
----
+## Beginner Notes
 
-## 8. What `--root` Means
+`workflow_mode = full-auto` runs extraction, analysis, rendering, and validation in one flow.
 
-When running scripts manually, you will see:
+`layout = 3col` is the recommended first layout. Full Auto still renders both `cheatsheet_3col.html` and `cheatsheet_4col.html`.
 
-```text
---root courses
-```
+`target_pages = 1` is a content budget, not a perfect page guarantee. Browser print settings can still change the final PDF page count.
 
-`--root` means: **the parent directory that contains your course folder**.
+`coverage_mode` controls which topics are included. `detail_mode` controls how much detail included topics receive.
 
-For example:
+## Optional PDF Export
 
-```text
-courses/COMP7503/
-```
-
-Here:
-
-```text
-course_name = COMP7503
---root = courses
-```
-
-So the command is:
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-```
-
-If your course directory is elsewhere, for example:
-
-```text
-/private/my-course-project/courses/COMP7503/
-```
-
-You can first enter:
-
-```text
-/private/my-course-project/
-```
-
-Then still use:
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-```
-
-Or pass the full path from anywhere:
-
-```bash
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root /private/my-course-project/courses
-```
-
-In one sentence: `--root` points to the directory that contains your course folder. It is not the skill installation directory.
-
----
-
-## 9. Export To PDF
-
-The main output of this skill is HTML.
-
-Open this file in a browser:
+The main output is HTML. To export PDF, open:
 
 ```text
 courses/COMP7503/outputs/cheatsheet_3col.html
 ```
 
-Then use the browser print dialog to export PDF:
+Then use the browser print dialog:
 
 ```text
 Ctrl + P / Cmd + P
@@ -1044,76 +399,14 @@ Margins: None or Minimum
 Background graphics: On
 ```
 
-Prefer `cheatsheet_3col.html` first because it is usually more stable and readable.
+## Common Mistakes
 
----
-
-## 10. Common Mistakes
-
-### Mistake 1: Running only `build_html.py` and expecting a full cheatsheet
-
-This will not work.
-
-`build_html.py` only renders an existing:
-
-```text
-working/cheatsheet_content.md
-```
-
-into HTML.
-
-It does not analyze course materials or decide which topics should be included. Material understanding, topic ranking, selection, compression, and `cheatsheet_content.md` writing must be done by Codex using the `$course-cheatsheet-maker` workflow.
-
-### Mistake 2: Committing real course materials to a public repository
-
-Do not do this.
-
-`courses/COURSE_NAME/` is an empty scaffold. Real course materials should stay local or private.
-
-### Mistake 3: Opening Codex in the wrong directory
-
-Open Codex from the course project root, for example:
-
-```text
-my-course-project/
-```
-
-Do not operate from the global skill installation directory:
+Do not put real course materials inside:
 
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
 ```
 
-### Mistake 4: Treating `target_pages` as an absolute page guarantee
+Do not run only `build_html.py` and expect full course analysis. That script only renders an already written `working/cheatsheet_content.md`.
 
-`target_pages` is a content budget and compression target, not an absolute print-page guarantee. Final PDF pages may still be affected by browser, font, scale, paper, and margin settings.
-
----
-
-## 11. Advanced: Manual Script Commands
-
-Beginners usually do not need to run these commands manually. Use the Codex prompt above first.
-
-These commands are mainly for debugging or advanced users. They do not replace the Agent reasoning steps. In particular, `build_html.py` requires `working/cheatsheet_content.md` to already exist.
-
-macOS / Linux / Git Bash:
-
-```bash
-SKILL_DIR="$HOME/.agents/skills/course-cheatsheet-maker"
-
-python "$SKILL_DIR/scripts/extract_materials.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/build_candidate_units.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/build_html.py" COMP7503 --root courses
-python "$SKILL_DIR/scripts/validate_workflow.py" COMP7503 --root courses --mode full-auto --layout 3col --target-pages 1 --coverage-mode balanced-standard --detail-mode balanced
-```
-
-Windows PowerShell:
-
-```powershell
-$env:SKILL_DIR="$HOME\.agents\skills\course-cheatsheet-maker"
-
-python "$env:SKILL_DIR\scripts\extract_materials.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\build_candidate_units.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\build_html.py" COMP7503 --root courses
-python "$env:SKILL_DIR\scripts\validate_workflow.py" COMP7503 --root courses --mode full-auto --layout 3col --target-pages 1 --coverage-mode balanced-standard --detail-mode balanced
-```
+Do not commit private course materials, extracted text, `working/` files, or generated `outputs/` files to a public repository.
