@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="course-cheatsheet-source" content="{{SOURCE_NOTE}}">
+  <meta name="course-cheatsheet-generated-at" content="{{GENERATED_AT}}">
+  <title>{{COURSE_NAME}} - 4col</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 4.5mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #111;
+      background: #fff;
+      font-family: "Calibri", "DengXian", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: 8px;
+      line-height: 1.02;
+    }
+
+    .sheet {
+      column-count: 4;
+      column-gap: 2.8mm;
+      column-fill: auto;
+    }
+
+    .sheet-meta {
+      margin: 0 0 0.28mm;
+      font-size: 6.3px;
+      line-height: 1;
+      color: #222;
+    }
+
+    h2,
+    h3 {
+      break-after: avoid;
+      margin: 0 0 0.35mm;
+      font-weight: 700;
+      line-height: 1.01;
+    }
+
+    h2 {
+      padding: 0.28mm 0.5mm;
+      color: #fff;
+      background: #111;
+      font-size: 9px;
+    }
+
+    h3 {
+      padding-bottom: 0.15mm;
+      border-bottom: 0.2mm solid #999;
+      font-size: 8.4px;
+    }
+
+    p,
+    ul,
+    ol,
+    pre {
+      margin: 0 0 0.28mm;
+    }
+
+    ul,
+    ol {
+      padding-left: 2.8mm;
+    }
+
+    li {
+      margin: 0 0 0.15mm;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      padding: 0.35mm;
+      border: 0.2mm solid #cfcfcf;
+      background: #f8f8f8;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 7.1px;
+      line-height: 1.0;
+    }
+
+    .topic-group,
+    .compact-line {
+      break-inside: avoid;
+      margin: 0 0 0.28mm;
+      padding: 0.2mm 0.34mm 0.22mm 0.45mm;
+      border-left: 0.4mm solid #777;
+      background: #fafafa;
+    }
+
+    .tagged {
+      display: inline;
+      margin-right: 0.9mm;
+      vertical-align: baseline;
+    }
+
+    .tag-label {
+      display: inline;
+      padding: 0 0.3mm;
+      margin-right: 0.28mm;
+      color: #fff;
+      background: #555;
+      font-weight: 700;
+    }
+
+    .topic .tag-label {
+      background: #111;
+    }
+
+    .formula {
+      font-family: "Consolas", "Courier New", monospace;
+    }
+
+    .definition .tag-label { background: #2f5d8c; }
+    .formula .tag-label { background: #111; }
+    .compare .tag-label { background: #7a5c00; }
+    .trap .tag-label { background: #9b1c1c; }
+    .qa .tag-label { background: #276749; }
+    .procedure .tag-label { background: #4a3f8f; }
+
+    .muted {
+      color: #666;
+    }
+
+    .priority-a,
+    .priority-b,
+    .priority-c,
+    .priority-r {
+      display: inline-block;
+      min-width: 2mm;
+      margin-right: 0.5mm;
+      padding: 0 0.45mm;
+      color: #fff;
+      font-weight: 700;
+      font-size: 7px;
+      line-height: 1.03;
+      text-align: center;
+    }
+
+    .priority-a { background: #111; }
+    .priority-b { background: #555; }
+    .priority-c { background: #888; }
+    .priority-r { background: #aaa; }
+
+    strong {
+      font-weight: 700;
+    }
+
+    @media screen {
+      body {
+        padding: 4.5mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <p class="sheet-meta"><strong>{{COURSE_NAME}} cheatsheet</strong></p>
+{{CONTENT_HTML}}
+  </main>
+</body>
+</html>
