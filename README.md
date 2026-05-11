@@ -18,11 +18,13 @@
 
 HTML/CSS 是最终版式的 source of truth。PDF 导出是可选步骤，应尽量保持 HTML 打印版式不变。
 
+> **重要说明：** 正确安装本 skill 时，应同时包含 `courses/COURSE_NAME/`。它是随仓库发布的空 starter scaffold，用来提供 `materials/knowledge/`、`materials/questions/`、`working/` 和 `outputs/` 这些目录。请只把它当作模板，不要把真实课程材料提交到公开仓库。
+
 ---
 
 ## 这个仓库是什么
 
-这个仓库既包含可安装的 skill 文件，也包含一个空的课程目录模板。
+这个仓库既包含可安装的 skill 文件，也包含一个随 release 安装的空课程目录模板。
 
 ```text
 course-cheatsheet-maker/
@@ -61,7 +63,7 @@ course-cheatsheet-maker/
 
 请区分两个位置：
 
-1. **skill 安装位置**：放 `SKILL.md`、`scripts/`、`assets/` 等文件。
+1. **skill 安装位置**：放 `SKILL.md`、`scripts/`、`assets/` 等文件，也应包含空的 `courses/COURSE_NAME/` starter scaffold。
 2. **课程材料位置**：放你自己的 lecture notes、slides、quiz、past paper 等课程文件。
 
 Codex 风格的全局 skill 安装位置通常是：
@@ -77,6 +79,8 @@ C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
 ```
 
 真实课程材料不要放进全局 skill 安装目录。推荐放在你自己的课程项目中，例如：
+
+全局 skill 安装中可以包含空的 `courses/COURSE_NAME` scaffold，但真实课程材料应保留在你的私有课程项目中。
 
 ```text
 my-course-project/
@@ -101,13 +105,15 @@ my-course-project/
 2. 复制课程模板：
 
 ```bash
-cp -r courses/COURSE_NAME courses/COMP7503
+mkdir -p courses
+cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
 ```
 
 Windows PowerShell：
 
 ```powershell
-Copy-Item -Recurse courses\COURSE_NAME courses\COMP7503
+New-Item -ItemType Directory -Force courses
+Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
 ```
 
 3. 放入课程材料：
@@ -284,11 +290,13 @@ It helps an agent:
 
 HTML/CSS is the source of truth for layout. PDF export is optional and should preserve the printed HTML layout as closely as possible.
 
+> **Important:** A correct installation includes `courses/COURSE_NAME/`. This bundled empty starter scaffold provides `materials/knowledge/`, `materials/questions/`, `working/`, and `outputs/` so beginners do not have to create those folders by hand. Keep it as a template, and do not commit real course materials to a public repository.
+
 ---
 
 ## What This Repository Contains
 
-This repository contains both the installable skill files and an empty course scaffold.
+This repository contains both the installable skill files and an empty course scaffold that is included in the release install.
 
 ```text
 course-cheatsheet-maker/
@@ -327,7 +335,7 @@ Path roles:
 
 Keep these two locations separate:
 
-1. **Skill installation location**: contains `SKILL.md`, `scripts/`, `assets/`, and related skill files.
+1. **Skill installation location**: contains `SKILL.md`, `scripts/`, `assets/`, related skill files, and the empty `courses/COURSE_NAME/` starter scaffold.
 2. **Course material location**: contains your own lecture notes, slides, quizzes, past papers, and other course files.
 
 For Codex-style setups, a typical global skill installation path is:
@@ -342,7 +350,11 @@ On Windows, this usually corresponds to:
 C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
 ```
 
-Do not put real course materials inside the global skill installation directory. A recommended private course project looks like this:
+Do not put real course materials inside the global skill installation directory.
+
+The global skill install may include the empty `courses/COURSE_NAME` scaffold, but real course materials should stay in your private course project.
+
+A recommended private course project looks like this:
 
 ```text
 my-course-project/
@@ -367,13 +379,15 @@ See [`QUICK_START.md`](QUICK_START.md) for detailed steps. Minimal flow:
 2. Copy the course scaffold:
 
 ```bash
-cp -r courses/COURSE_NAME courses/COMP7503
+mkdir -p courses
+cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
 ```
 
-Windows PowerShell:
+Windows PowerShell：
 
 ```powershell
-Copy-Item -Recurse courses\COURSE_NAME courses\COMP7503
+New-Item -ItemType Directory -Force courses
+Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
 ```
 
 3. Put course materials in:

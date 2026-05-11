@@ -23,7 +23,7 @@
 
 | 概念 | 作用 | 示例 |
 |---|---|---|
-| skill 安装目录 | 放 `SKILL.md`、`scripts/`、`assets/` 等 skill 文件 | `~/.agents/skills/course-cheatsheet-maker/` |
+| skill 安装目录 | 放 `SKILL.md`、`scripts/`、`assets/` 等 skill 文件，以及空的 `courses/COURSE_NAME/` starter scaffold | `~/.agents/skills/course-cheatsheet-maker/` |
 | 课程目录 | 放你的真实课程材料和生成结果 | `courses/COMP7503/` |
 
 本仓库现在自带一个空模板：
@@ -38,6 +38,8 @@ courses/COURSE_NAME/
 ```
 
 `COURSE_NAME` 只是占位名。实际使用时，请复制或改名成真实课程名，例如 `COMP7503`。
+
+安装后，这个 bundled scaffold 通常位于 skill 安装目录里的 `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/`。
 
 ---
 
@@ -57,10 +59,21 @@ https://raw.githubusercontent.com/tsukiR1n/course-cheatsheet-maker/main/INSTALL.
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
   SKILL.md
+  README.md
+  QUICK_START.md
+  INSTALL.md
+  LICENSE
   requirements.txt
   scripts/
   assets/
   references/
+  courses/
+    COURSE_NAME/
+      materials/
+        knowledge/
+        questions/
+      working/
+      outputs/
 ```
 
 Windows 上通常对应：
@@ -71,28 +84,32 @@ C:\Users\<你的用户名>\.agents\skills\course-cheatsheet-maker\
 
 这个目录是 skill 的安装位置，不是课程材料目录。
 
+空的 `courses/COURSE_NAME/` scaffold 位于这个已安装的 skill 目录中。真实课程材料仍应放在你自己的课程项目里。
+
 ---
 
 ## 2. 创建课程目录
 
-本仓库已经提供了一个空课程模板：
+已安装的 skill 目录中已经提供了一个空课程模板：
 
 ```text
-courses/COURSE_NAME/
+~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/
 ```
 
-第一次使用时，可以复制这个模板。
+第一次使用时，从已安装的 skill 目录复制这个模板到当前课程项目，并把 `COMP7503` 换成你的真实课程名。
 
 macOS / Linux / Git Bash：
 
 ```bash
-cp -r courses/COURSE_NAME courses/COMP7503
+mkdir -p courses
+cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
 ```
 
 Windows PowerShell：
 
 ```powershell
-Copy-Item -Recurse courses\COURSE_NAME courses\COMP7503
+New-Item -ItemType Directory -Force courses
+Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
 ```
 
 复制后结构应该类似：
@@ -106,7 +123,7 @@ courses/COMP7503/
   outputs/
 ```
 
-如果你不想在 skill 仓库里测试，也可以在自己的私有课程项目里创建同样的结构：
+如果你不想在 skill 仓库里测试，可以把这个模板复制到自己的私有课程项目里。只有在 scaffold 缺失时，才需要手动补出同样的结构：
 
 ```text
 my-course-project/
@@ -564,7 +581,7 @@ There are two concepts that are easy to confuse:
 
 | Concept | Purpose | Example |
 |---|---|---|
-| Skill installation directory | Contains `SKILL.md`, `scripts/`, `assets/`, and other skill files. | `~/.agents/skills/course-cheatsheet-maker/` |
+| Skill installation directory | Contains `SKILL.md`, `scripts/`, `assets/`, other skill files, and the empty `courses/COURSE_NAME/` starter scaffold. | `~/.agents/skills/course-cheatsheet-maker/` |
 | Course directory | Contains your real course materials and generated outputs. | `courses/COMP7503/` |
 
 This repository now includes an empty scaffold:
@@ -579,6 +596,8 @@ courses/COURSE_NAME/
 ```
 
 `COURSE_NAME` is only a placeholder. In real use, copy or rename it to an actual course name, such as `COMP7503`.
+
+After installation, this bundled scaffold is usually inside the installed skill directory at `~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/`.
 
 ---
 
@@ -598,10 +617,21 @@ After installation, you should typically have:
 ```text
 ~/.agents/skills/course-cheatsheet-maker/
   SKILL.md
+  README.md
+  QUICK_START.md
+  INSTALL.md
+  LICENSE
   requirements.txt
   scripts/
   assets/
   references/
+  courses/
+    COURSE_NAME/
+      materials/
+        knowledge/
+        questions/
+      working/
+      outputs/
 ```
 
 On Windows, this usually corresponds to:
@@ -612,28 +642,32 @@ C:\Users\<your-username>\.agents\skills\course-cheatsheet-maker\
 
 This is the skill installation directory, not the course material directory.
 
+The empty `courses/COURSE_NAME/` scaffold lives inside this installed skill directory. Real course materials should still stay in your own course project.
+
 ---
 
 ## 2. Create A Course Directory
 
-This repository already provides an empty course scaffold:
+The installed skill directory already provides an empty course scaffold:
 
 ```text
-courses/COURSE_NAME/
+~/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME/
 ```
 
-For first use, copy this scaffold.
+For first use, copy this scaffold from the installed skill directory into your current course project, and replace `COMP7503` with your actual course name.
 
 macOS / Linux / Git Bash:
 
 ```bash
-cp -r courses/COURSE_NAME courses/COMP7503
+mkdir -p courses
+cp -r "$HOME/.agents/skills/course-cheatsheet-maker/courses/COURSE_NAME" courses/COMP7503
 ```
 
 Windows PowerShell:
 
 ```powershell
-Copy-Item -Recurse courses\COURSE_NAME courses\COMP7503
+New-Item -ItemType Directory -Force courses
+Copy-Item -Recurse "$HOME\.agents\skills\course-cheatsheet-maker\courses\COURSE_NAME" "courses\COMP7503"
 ```
 
 After copying, the structure should look like:
@@ -647,7 +681,7 @@ courses/COMP7503/
   outputs/
 ```
 
-If you do not want to test inside the skill repository, create the same structure in your own private course project:
+If you do not want to test inside the skill repository, copy the scaffold into your own private course project. Only recreate this structure by hand if the scaffold is missing:
 
 ```text
 my-course-project/
