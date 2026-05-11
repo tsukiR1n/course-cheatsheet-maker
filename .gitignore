@@ -6,19 +6,18 @@ __pycache__/
 venv/
 .DS_Store
 
-courses/
+# Keep the empty starter course scaffold, but do not commit real course materials.
+courses/**/materials/knowledge/**
+!courses/**/materials/knowledge/.gitkeep
 
-examples/**/materials/**/*
-!examples/**/materials/knowledge/
-!examples/**/materials/knowledge/.gitkeep
-!examples/**/materials/questions/
-!examples/**/materials/questions/.gitkeep
+courses/**/materials/questions/**
+!courses/**/materials/questions/.gitkeep
 
-examples/**/working/**/*
-!examples/**/working/.gitkeep
+courses/**/working/**
+!courses/**/working/.gitkeep
 
-examples/**/outputs/**/*
-!examples/**/outputs/.gitkeep
+courses/**/outputs/**
+!courses/**/outputs/.gitkeep
 
 *.pdf
 *.pptx
