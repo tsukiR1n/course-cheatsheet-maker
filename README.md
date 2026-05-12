@@ -1,4 +1,4 @@
-# course-cheatsheet-maker（中文版）
+# course-cheatsheet-maker
 
 `course-cheatsheet-maker` 是一个可安装的 Codex 风格 skill，用于把课程资料转换成紧凑的 A4 横向 cheatsheet。
 
