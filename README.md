@@ -116,7 +116,7 @@ my-course-project/
       working/
       outputs/
 ```
-
+注意：`COMP7503` 只是示例。请在所有路径和 prompt 中把它替换成你的真实课程文件夹名。
 把已安装的 `courses/COURSE_NAME/` scaffold 当作模板使用。将它复制到你的私人课程项目中，并把副本重命名为你的真实课程名，例如 `COMP7503`、`MATH101` 或 `DATABASE`。
 
 ## 快速使用
@@ -131,6 +131,8 @@ my-course-project/
 courses/COMP7503/materials/knowledge/
 courses/COMP7503/materials/questions/
 ```
+
+注意：`COMP7503` 只是示例。请在所有路径和 prompt 中把它替换成你的真实课程文件夹名。
 
 4. 在你的课程项目根目录打开 Codex，并使用：
 
@@ -371,7 +373,7 @@ my-course-project/
       working/
       outputs/
 ```
-
+Important: `COMP7503` is only an example. Replace it with your real course folder name everywhere.
 Use the installed `courses/COURSE_NAME/` scaffold as a template. Copy it into your private course project and rename the copy to your real course name, such as `COMP7503`, `MATH101`, or `DATABASE`.
 
 ## Quick Use
@@ -386,6 +388,8 @@ See [QUICK_START.md](QUICK_START.md) for the first-run guide. The short version 
 courses/COMP7503/materials/knowledge/
 courses/COMP7503/materials/questions/
 ```
+
+Important: `COMP7503` is only an example. Replace it with your real course folder name everywhere.
 
 4. Open Codex from your course project root and use:
 

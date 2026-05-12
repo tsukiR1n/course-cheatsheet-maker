@@ -43,9 +43,12 @@ https://raw.githubusercontent.com/tsukiR1n/course-cheatsheet-maker/main/INSTALL.
 
 ## 第 3 步：复制 Starter Course Scaffold
 
-创建你自己的课程项目文件夹，然后从已安装的 skill 文件夹中把 starter scaffold 复制到该项目里。
+这一节的作用是：从已安装的 skill 中复制一个空课程模板，创建你自己的课程文件夹。
 
-示例目标课程名：`COMP7503`。
+`courses/COURSE_NAME/` 是模板文件夹，不是真实课程。请把它复制到你的课程项目中，并把副本命名为你的真实课程名。
+
+下面以 `COMP7503` 为例。注意：`COMP7503` 只是示例，请替换成你的真实课程文件夹名。
+
 
 macOS / Linux / Git Bash：
 
@@ -75,6 +78,7 @@ my-course-project/
 ```
 
 把 `COMP7503` 替换成你的真实课程文件夹名。
+之后请把真实课程资料放进你复制出来的课程文件夹，而不是放进 skill 安装目录。
 
 ## 第 4 步：添加课程资料
 
@@ -251,9 +255,11 @@ Hidden `.gitkeep` files inside `courses/COURSE_NAME/` are allowed. They only kee
 
 ## Step 3: Copy The Starter Course Scaffold
 
-Create your own course project folder, then copy the starter scaffold from the installed skill folder into that project.
+This step creates your own course folder by copying the empty starter scaffold from the installed skill.
 
-Example target course name: `COMP7503`.
+`courses/COURSE_NAME/` is a template folder, not a real course. Copy it into your course project and rename the copy to your real course name.
+
+The example course name below is `COMP7503`. Important: `COMP7503` is only an example. Replace it with your real course folder name.
 
 macOS / Linux / Git Bash:
 
@@ -283,6 +289,7 @@ my-course-project/
 ```
 
 Replace `COMP7503` with your real course folder name.
+After that, put real course materials into the copied course folder, not into the skill installation directory.
 
 ## Step 4: Add Course Materials
 
