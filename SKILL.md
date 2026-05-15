@@ -543,6 +543,13 @@ Supported block cues:
 - `Compare: ...`
 - `Procedure: ...`
 
+Printable content hygiene rules:
+
+- `Formula:` may only be used for real reusable formulas, equations, calculation shortcuts, legal element tests, statutory tests, compact rule templates, or exam-ready structured tests.
+- Do not write ranking metadata inside printable content. Never include `Score`, `Scores`, `Lecture coverage`, `Exam evidence`, `Testability/formula value`, `Dependency`, `Error risk`, `Total`, `use Kxx`, or `question support Qxx` in any `Formula:`, `Def:`, `Procedure:`, `Trap:`, `Compare:`, `Q:`, or `A:` line.
+- For law, policy, humanities, essay, or concept-heavy courses, prefer `Def:`, `Procedure:`, `Compare:`, `Trap:`, and `Q/A` over `Formula:` unless the material contains a real formula or reusable legal/statutory test.
+- `importance_ranking.md` is a planning artifact. Its score lines, evidence summaries, source IDs, and ranking rationale must not be copied into `cheatsheet_content.md` as printable study content.
+
 By default, generated `cheatsheet_content.md` should use concise bilingual topic labels in Topic lines:
 
 ```text

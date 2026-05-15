@@ -192,6 +192,16 @@ SCORE_LINE_RE = re.compile(
     r"(?=.*Total\s*=\s*(?:[0-9]|1[0-5]))",
     re.IGNORECASE,
 )
+PRINTABLE_METADATA_LEAK_RE = re.compile(
+    r"^(Formula|Def|Trap|Q|A|Compare|Procedure):.*("
+    r"\bScores?\s*:?\s*(?:Knowledge emphasis|Lecture coverage|Question evidence|Exam evidence|Testability|Dependency|Error risk|Total)\b|"
+    r"\b(?:Knowledge emphasis|Lecture coverage|Question evidence|Exam evidence|Testability/formula value|Dependency|Error risk)\s*=\s*[0-3]\b|"
+    r"\bTotal\s*=\s*(?:[0-9]|1[0-5])\b|"
+    r"\buse\s+K\d+\b|"
+    r"\bquestion support\s+Q\d+\b"
+    r")",
+    re.IGNORECASE | re.MULTILINE,
+)
 DETAIL_MODE_RE = re.compile(
     r"(?:Detail mode|Recommended detail):\s*(detailed|balanced|simple|minimal/simple|minimal|omit)",
     re.IGNORECASE,
@@ -956,6 +966,24 @@ def validate_bilingual_topic_labels(content_text: str, warnings: list[str]) -> N
         )
 
 
+def validate_printable_metadata_leak(content_text: str, errors: list[str]) -> None:
+    match = PRINTABLE_METADATA_LEAK_RE.search(content_text)
+    if not match:
+        return
+
+    leaked_line = match.group(0).strip()
+    if len(leaked_line) > 180:
+        leaked_line = leaked_line[:177] + "..."
+
+    add_error(
+        errors,
+        "cheatsheet_content.md contains ranking metadata inside printable block cues. "
+        "Do not copy Score/Scores/Lecture coverage/Exam evidence/Total/source-support metadata "
+        "into Formula/Def/Procedure/Trap/Compare/Q/A lines. "
+        f"First detected line: {leaked_line}",
+    )
+
+
 def validate_candidate_units_shape(path: Path, warnings: list[str]) -> None:
     if not path.exists():
         return
@@ -1425,6 +1453,7 @@ def validate_course(
     content_text = read_text(content_path) if content_path.exists() else ""
     if content_text:
         validate_mojibake_warning(str(content_path), content_text, warnings)
+        validate_printable_metadata_leak(content_text, errors)
     run_config_text = validate_run_config(
         working_dir=working_dir,
         mode=mode,
